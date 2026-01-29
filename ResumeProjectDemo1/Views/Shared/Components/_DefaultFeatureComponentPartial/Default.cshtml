@@ -1,0 +1,55 @@
+﻿@model List<ResumeProjectDemo1.Entities.Feature>
+
+<div id="page-cover" class="page-cover">
+    <div class="page-cover-wrapper-fixed">
+        <div id="dynamic-bg" class="page-cover-bg" style="transition: background-image 1.5s ease-in-out; background-size: cover; background-position: center;">
+            <div class="overlay-inner bg-dark opacity-55"></div>
+        </div>
+
+        <div class="page-cover-wrap">
+            <section id="home" class="d-flex min-vh-100">
+                <div class="container align-self-center text-white text-center">
+                    <div class="avatar avatar-xxl mb-6">
+                        <div class="avatar-shape avatar-shape-rounded bg-white mt-n2 mb-n2 mr-n2"></div>
+                        @* About sınıfındaki ImageUrl *@
+                        <img src="@ViewBag.AboutImage"
+                             alt="@ViewBag.AboutName"
+                             class="avatar-img rounded-circle shadow-light"
+                             onerror="this.src='/demo/images/avatar_small.jpg'">
+                    </div>
+
+                    @* About sınıfındaki NameSurnname *@
+                    <h1 class="mb-2 mb-lg-3">@ViewBag.AboutName</h1>
+
+                    @* About sınıfındaki Title *@
+                    <p class="lead mb-0">@ViewBag.AboutTitle</p>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script>
+    // C# Modelindeki resimleri JS dizisine çeviriyoruz
+    const slideImages = [
+    @foreach (var item in Model)
+    {
+        @:"@item.ImageUrl",
+    }
+    ];
+
+    let i = 0;
+    const bgDiv = document.getElementById('dynamic-bg');
+
+    function changeSlide() {
+        if (slideImages.length > 0) {
+            bgDiv.style.backgroundImage = `url('${slideImages[i]}')`;
+            i = (i + 1) % slideImages.length;
+        }
+    }
+
+    // İlk yüklemede çalıştır
+    changeSlide();
+    // 5 saniyede bir değiştir
+    setInterval(changeSlide, 5000);
+</script>

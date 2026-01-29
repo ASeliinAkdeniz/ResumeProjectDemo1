@@ -1,0 +1,164 @@
+﻿@model ResumeProjectDemo1.Entities.Message
+
+@{
+    ViewData["Title"] = "Mesaj Detayı";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<style>
+    :root {
+        --bg-card: #1a2332;
+        --bg-inner: #243447;
+        --accent: #00d9ff;
+        --accent-purple: #7c3aed;
+        --text: #e8ecf2;
+        --text-muted: #94a3b8;
+    }
+
+    .details-container {
+        max-width: 900px;
+        margin: 2rem auto;
+    }
+
+    .detail-card {
+        background: var(--bg-card);
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 2.5rem;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    }
+
+    .detail-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .sender-profile {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .large-avatar {
+        width: 70px;
+        height: 70px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    .sender-meta h2 {
+        margin: 0;
+        color: var(--text);
+        font-size: 1.5rem;
+    }
+
+    .sender-meta p {
+        margin: 0.2rem 0;
+        color: var(--text-muted);
+    }
+
+    .message-content {
+        background: var(--bg-inner);
+        padding: 2rem;
+        border-radius: 15px;
+        color: var(--text);
+        line-height: 1.8;
+        font-size: 1.1rem;
+        min-height: 200px;
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .info-item {
+        background: rgba(255,255,255,0.03);
+        padding: 1rem;
+        border-radius: 10px;
+    }
+
+    .info-label {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+    }
+
+    .info-value {
+        color: var(--accent);
+        font-weight: 600;
+    }
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        margin-bottom: 1.5rem;
+        transition: color 0.2s;
+    }
+
+        .back-btn:hover {
+            color: var(--accent);
+        }
+</style>
+
+<div class="details-container">
+    <a href="/Message/MessageList" class="back-btn">
+        ← Listeye Geri Dön
+    </a>
+
+    <div class="detail-card">
+        <div class="detail-header">
+            <div class="sender-profile">
+                <div class="large-avatar">@Model.NameSurname.Substring(0, 1).ToUpper()</div>
+                <div class="sender-meta">
+                    <h2>@Model.NameSurname</h2>
+                    <p>@Model.EmailAddress</p>
+                </div>
+            </div>
+            <div style="text-align: right">
+                <div class="info-label">Gönderim Tarihi</div>
+                <div class="info-value">@Model.SendDate.ToString("dd MMMM yyyy HH:mm")</div>
+            </div>
+        </div>
+
+        <div class="info-label">Konu</div>
+        <h3 style="color: var(--text); margin-bottom: 1.5rem;">@Model.Subject</h3>
+
+        <div class="info-label">Mesaj Detayı</div>
+        <div class="message-content">
+            @Model.MessageDetail
+        </div>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label">Durum</div>
+                <div class="info-value">
+                    <span style="color: @(Model.IsRead ? "#10b981" : "#00d9ff")">
+                        ● @(Model.IsRead ? "Okundu Olarak İşaretlendi" : "Yeni Mesaj")
+                    </span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Mesaj ID</div>
+                <div class="info-value">#@Model.MessageId</div>
+            </div>
+        </div>
+    </div>
+</div>

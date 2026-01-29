@@ -1,0 +1,77 @@
+﻿@model ResumeProjectDemo1.Entities.About
+@{
+    ViewData["Title"] = "UpdateAbout";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="flex-1 overflow-y-auto p-8">
+    <div class="max-w-6xl mx-auto space-y-8">
+        <div class="flex items-center gap-4">
+            <a href="/About/AboutList/" class="flex items-center justify-center w-10 h-10 rounded-lg border border-slate-200 dark:border-[#3b4d54] hover:bg-slate-50 dark:hover:bg-[#1c2427] transition-colors">
+                <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+            </a>
+            <div>
+                <h3 class="text-3xl font-black tracking-tight">Profili Güncelle</h3>
+                <p class="text-slate-500 dark:text-[#9db2b9] mt-1">Hakkımda sayfasındaki tüm detayları buradan revize edebilirsiniz.</p>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-[#111618] rounded-2xl border border-slate-200 dark:border-[#3b4d54] overflow-hidden shadow-xl">
+            <form method="post" class="flex flex-col md:flex-row min-h-[500px]">
+                <input type="hidden" asp-for="AboutId" />
+
+                <div class="md:w-5/12 bg-slate-50 dark:bg-[#1c2427] p-8 border-r border-slate-200 dark:border-[#3b4d54] flex flex-col justify-center items-center">
+                    <div class="w-full max-w-[300px] aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl mb-6 border-4 border-white dark:border-[#111618]">
+                        <img src="@Model.ImageUrl" id="previewImage" class="w-full h-full object-cover"
+                             onerror="this.src='https://placehold.co/600x800?text=Resim+Bulunamadı'" />
+                    </div>
+                    <div class="w-full">
+                        <label class="block text-xs font-black uppercase text-slate-500 mb-2">Profil Resim URL</label>
+                        <input type="text" asp-for="ImageUrl" id="imageUrlInput"
+                               class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-[#3b4d54] bg-white dark:bg-[#111618] focus:ring-2 focus:ring-primary/50 outline-none text-sm transition-all"
+                               placeholder="https://..." required />
+                        <p class="text-[10px] text-slate-400 mt-2 italic text-center text-balance">Resim URL'sini değiştirdiğinizde önizleme otomatik güncellenmezse sayfayı kaydetmeniz yeterlidir.</p>
+                    </div>
+                </div>
+
+                <div class="md:w-7/12 p-8 md:p-12 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="md:col-span-1">
+                            <label class="block text-sm font-bold mb-2">Ad Soyad</label>
+                            <input type="text" asp-for="NameSurnname"
+                                   class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-[#3b4d54] bg-white dark:bg-[#111618] outline-none focus:ring-2 focus:ring-primary/50" required />
+                        </div>
+
+                        <div class="md:col-span-1">
+                            <label class="block text-sm font-bold mb-2">Unvan / Başlık</label>
+                            <input type="text" asp-for="Title"
+                                   class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-[#3b4d54] bg-white dark:bg-[#111618] outline-none focus:ring-2 focus:ring-primary/50" required />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Hakkımda Açıklaması</label>
+                        <textarea asp-for="Description" rows="8"
+                                  class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-[#3b4d54] bg-white dark:bg-[#111618] outline-none focus:ring-2 focus:ring-primary/50 resize-none text-sm leading-relaxed"
+                                  placeholder="Kendinizden bahsedin..." required></textarea>
+                    </div>
+
+                    <div class="flex items-center gap-3 pt-6 border-t border-slate-100 dark:border-[#3b4d54]">
+                        <button type="submit" class="flex-1 md:flex-none flex items-center justify-center gap-2 px-10 py-4 bg-primary text-background-dark rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">
+                            <span class="material-symbols-outlined text-[20px]">save</span>
+                            Değişiklikleri Kaydet
+                        </button>
+                        <a href="/About/AboutList/" class="flex-1 md:flex-none text-center px-10 py-4 bg-slate-100 dark:bg-[#1c2427] text-slate-700 dark:text-slate-300 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">
+                            İptal
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('imageUrlInput').addEventListener('input', function() {
+        document.getElementById('previewImage').src = this.value;
+    });
+</script>

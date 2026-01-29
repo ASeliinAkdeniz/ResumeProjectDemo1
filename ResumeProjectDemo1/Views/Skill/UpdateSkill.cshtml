@@ -1,0 +1,61 @@
+﻿@model ResumeProjectDemo1.Entities.Skill
+@{
+    ViewData["Title"] = "UpdateSkill";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="flex-1 overflow-y-auto p-8">
+    <div class="max-w-4xl mx-auto space-y-8">
+        <div class="flex items-center gap-4">
+            <a href="/Skill/SkillList/" class="flex items-center justify-center w-10 h-10 rounded-lg border border-slate-200 dark:border-[#3b4d54] hover:bg-slate-50 transition-colors">
+                <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+            </a>
+            <div>
+                <h3 class="text-3xl font-black tracking-tight">Yetenek Güncelle</h3>
+                <p class="text-slate-500 dark:text-[#9db2b9] mt-1">"@Model.Title" yeteneğini düzenliyorsunuz.</p>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-[#111618] rounded-xl border border-slate-200 dark:border-[#3b4d54] p-8 shadow-sm">
+            <form method="post" class="space-y-6">
+                <input type="hidden" asp-for="SkillID" />
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Yetenek Adı</label>
+                        <input type="text" asp-for="Title" class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-[#3b4d54] bg-white dark:bg-[#1c2427] outline-none focus:ring-2 focus:ring-primary/50" required />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Hakimiyet Oranı (%)</label>
+                        <input type="number" asp-for="Value" min="0" max="100" class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-[#3b4d54] bg-white dark:bg-[#1c2427] outline-none focus:ring-2 focus:ring-primary/50" required />
+                    </div>
+                </div>
+
+                <div class="p-4 bg-slate-50 dark:bg-[#1c2427] rounded-lg border border-slate-200 dark:border-[#3b4d54]">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-bold uppercase text-slate-500">Mevcut Seviye Önizlemesi</span>
+                        <span class="text-xs font-black">%@Model.Value</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                        @{
+                            string pColor = "bg-green-500";
+                            if (Model.Value <= 25) pColor = "bg-red-500";
+                            else if (Model.Value <= 50) pColor = "bg-yellow-500";
+                            else if (Model.Value <= 75) pColor = "bg-blue-500";
+                        }
+                        <div class="@pColor h-full transition-all duration-700" style="width: @Model.Value%"></div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 pt-6 border-t border-slate-200 dark:border-[#3b4d54]">
+                    <button type="submit" class="flex items-center gap-2 px-6 py-3 bg-primary text-background-dark rounded-lg font-bold text-sm hover:opacity-90">
+                        <span class="material-symbols-outlined text-[20px]">check</span>
+                        Değişiklikleri Uygula
+                    </button>
+                    <a href="/Skill/SkillList/" class="px-6 py-3 bg-slate-100 dark:bg-[#1c2427] rounded-lg font-bold text-sm">Vazgeç</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

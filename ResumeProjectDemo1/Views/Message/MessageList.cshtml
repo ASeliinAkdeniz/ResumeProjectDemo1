@@ -1,0 +1,295 @@
+﻿@model List<ResumeProjectDemo1.Entities.Message>
+
+@{
+    ViewData["Title"] = "Mesaj Listesi";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<style>
+    :root {
+        --bg-card: #1a2332;
+        --bg-hover: #243447;
+        --accent: #00d9ff;
+        --accent-purple: #7c3aed;
+        --text: #e8ecf2;
+        --text-muted: #94a3b8;
+        --danger: #ef4444;
+    }
+
+    .messages-container {
+        max-width: 1400px;
+        margin: 0 auto; /* Sayfayı yatayda ortalar */
+        padding: 2rem; /* Kenarlardan nefes payı bırakır */
+        width: 100%; /* Genişliğin tamamını kullanmasını sağlar */
+    }
+
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .btn-new {
+        background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 10px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-new:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        background: var(--bg-card);
+        padding: 1.25rem;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat-label {
+        color: var(--text-muted);
+        font-size: 0.875rem;
+    }
+
+    .stat-value {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-top: 0.5rem;
+    }
+
+    .table-card {
+        background: var(--bg-card);
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.1);
+        max-height: 600px;
+        overflow-y: auto;
+    }
+
+        /* Scrollbar */
+        .table-card::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .table-card::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+            border-radius: 10px;
+        }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: rgba(0,0,0,0.2);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    th {
+        padding: 1rem 1.25rem;
+        text-align: left;
+        font-size: 0.875rem;
+        color: var(--text-muted);
+    }
+
+    tbody tr {
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        transition: all 0.2s;
+    }
+
+        tbody tr:hover {
+            background: var(--bg-hover);
+        }
+
+    td {
+        padding: 1.25rem;
+    }
+
+    .sender-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: white;
+    }
+
+    .sender-name {
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .sender-email {
+        font-size: 0.813rem;
+        color: var(--text-muted);
+    }
+
+    .subject-text {
+        font-weight: 500;
+        color: var(--text);
+    }
+
+    .message-preview {
+        font-size: 0.813rem;
+        color: var(--text-muted);
+    }
+
+    .badge {
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.813rem;
+        font-weight: 600;
+    }
+
+    .badge-unread {
+        background: rgba(0, 217, 255, 0.1);
+        color: var(--accent);
+        border: 1px solid rgba(0, 217, 255, 0.2);
+    }
+
+    .badge-read {
+        background: rgba(148, 163, 184, 0.1);
+        color: var(--text-muted);
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn-view {
+        background: rgba(0, 217, 255, 0.1);
+        color: var(--accent);
+    }
+
+    .btn-delete {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--danger);
+    }
+</style>
+
+<div class="messages-container">
+    <div class="header-section">
+        <h1 class="page-title">Mesaj Listesi</h1>
+        <a href="@Url.Action("Create", "Messages")" class="btn-new">
+            ✉️ Yeni Mesaj
+        </a>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-label">Toplam</div>
+            <div class="stat-value">@Model.Count()</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Okunmamış</div>
+            <div class="stat-value">@Model.Count(m => !m.IsRead)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Okunmuş</div>
+            <div class="stat-value">@Model.Count(m => m.IsRead)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Bu Ay</div>
+            <div class="stat-value">@Model.Count(m => m.SendDate.Month == DateTime.Now.Month)</div>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Gönderen</th>
+                    <th>Konu & Mesaj</th>
+                    <th>Durum</th>
+                    <th>Tarih</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var msg in Model.OrderByDescending(m => m.SendDate))
+                {
+                    <tr style="@(msg.IsRead ? "" : "border-left: 4px solid var(--accent);")">
+                        <td>#@msg.MessageId</td>
+                        <td>
+                            <div class="sender-info">
+                                <div class="avatar">@msg.NameSurname.Substring(0, 1).ToUpper()</div>
+                                <div>
+                                    <div class="sender-name">@msg.NameSurname</div>
+                                    <div class="sender-email">@msg.EmailAddress</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="subject-text">@msg.Subject</div>
+                            <div class="message-preview">
+                                @(msg.MessageDetail.Length > 50 ? msg.MessageDetail.Substring(0, 50) + "..." : msg.MessageDetail)
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge @(msg.IsRead ? "badge-read" : "badge-unread")">
+                                @(msg.IsRead ? "Okundu" : "Okunmadı")
+                            </span>
+                        </td>
+                        <td>
+                            <div class="date-text">@msg.SendDate.ToString("dd MMM yyyy")</div>
+                            <div style="color:var(--text-muted); font-size:0.8rem;">@msg.SendDate.ToString("HH:mm")</div>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a asp-controller="Message" asp-action="Details" asp-route-id="@msg.MessageId" class="btn btn-view">Görüntüle</a>
+                                <a asp-controller="Message" asp-action="Delete" asp-route-id="@msg.MessageId" class="btn btn-delete" onclick="return confirm('Silmek istediğine emin misin?')">Sil</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

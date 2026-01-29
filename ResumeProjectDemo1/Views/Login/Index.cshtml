@@ -1,0 +1,115 @@
+﻿@model ResumeProjectDemo1.Entities.Admin
+@{
+    Layout = null;
+    // Controller'dan gelen listeyi güvenli bir şekilde yakalıyoruz
+    var backgroundImages = ViewBag.BackgroundImages as List<string>;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <title>Admin Giriş Paneli</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .carousel-item img {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            filter: brightness(40%); /* Resimleri biraz daha kararttık ki form öne çıksın */
+        }
+
+        .login-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            background: rgba(15, 23, 42, 0.9); /* Çok koyu lacivert/siyah tonu */
+            padding: 40px;
+            border-radius: 15px;
+            width: 400px;
+            color: white;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .form-control {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            margin-bottom: 20px;
+        }
+
+            .form-control:focus {
+                background: rgba(255,255,255,0.1);
+                color: white;
+                border-color: #3b82f6;
+            }
+    </style>
+</head>
+<body>
+
+    @* Arka Plan Carousel *@
+    <div id="loginCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-inner">
+            @if (backgroundImages != null && backgroundImages.Count > 0)
+            {
+                for (int i = 0; i < backgroundImages.Count; i++)
+                {
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <img src="@backgroundImages[i]" class="d-block w-100">
+                    </div>
+                }
+            }
+            else
+            {
+                @* Veri gelmezse siyah arka plan *@
+                <div class="carousel-item active" style="background-color: #111; height: 100vh;"></div>
+            }
+        </div>
+    </div>
+
+    @* Giriş Kutusu *@
+    <div class="login-box">
+        <h3 class="text-center mb-4 font-weight-bold">Admin Paneli</h3>
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger py-2 text-center" style="font-size: 14px;">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+
+        <form method="post">
+            <div class="form-group">
+                <label class="mb-2">Kullanıcı Adı</label>
+                <input type="text" name="Username" class="form-control" placeholder="Kullanıcı adınızı giriniz" required>
+            </div>
+            <div class="form-group">
+                <label class="mb-2">Şifre</label>
+                <input type="password" name="Password" class="form-control" placeholder="Şifrenizi giriniz" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mt-2 py-2">Sisteme Giriş Yap</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var myCarousel = document.querySelector('#loginCarousel');
+            var carousel = new bootstrap.Carousel(myCarousel, {
+                interval: 5000, // 5 saniye
+                ride: 'carousel',
+                pause: false // Fare üzerine gelince durmasın istiyorsan false yap
+            });
+        });
+    </script>
+</body>
+</html>

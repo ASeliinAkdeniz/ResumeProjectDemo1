@@ -1,0 +1,181 @@
+﻿@{
+    // Eğer bu dosya bir TASLAK (Layout) olacaksa:
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Developer Portfolio Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13b6ec",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#101d22",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex overflow-hidden">
+    <!-- Fixed Vertical Sidebar -->
+    <aside class="w-64 flex-shrink-0 bg-white dark:bg-[#111618] border-r border-slate-200 dark:border-[#283539] flex flex-col h-screen">
+        <a href="/Default/Index" target="_blank" class="p-6 flex items-center gap-3 group hover:bg-slate-100 dark:hover:bg-[#1c2427] transition-all duration-300 border-b border-transparent hover:border-primary/20">
+            <div class="relative">
+                <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-background-dark font-bold text-xl group-hover:scale-110 transition-transform">
+                    ASA
+                </div>
+                <span class="material-symbols-outlined absolute -top-1 -right-1 text-[12px] bg-background-dark text-primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                    open_in_new
+                </span>
+            </div>
+            <div class="flex flex-col">
+                <h1 class="text-sm font-bold leading-tight group-hover:text-primary transition-colors">Full Stack Dev</h1>
+                <div class="flex items-center gap-1">
+                    <p class="text-xs text-slate-500 dark:text-[#9db2b9]">Admin Paneli</p>
+                    <span class="text-[10px] text-primary opacity-0 group-hover:opacity-100 transition-opacity">→ Site</span>
+                </div>
+            </div>
+        </a>
+        <nav class="flex-1 px-4 py-2 space-y-1 overflow-y-auto">
+            @{
+                // Mevcut URL yolunu alıyoruz
+                var currentUrl = ViewContext.HttpContext.Request.Path.ToString();
+
+                // CSS Sınıflarını değişken olarak tanımlayalım (Kod kalabalığını önler)
+                string activeClass = "bg-primary/10 dark:bg-primary/20 text-primary font-bold";
+                string inactiveClass = "text-slate-600 dark:text-[#9db2b9] hover:bg-slate-100 dark:hover:bg-[#1c2427]";
+                string baseClass = "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors";
+            }
+
+            <a class="@baseClass @(currentUrl == "/" || currentUrl.Contains("/Dashboard/") ? activeClass : inactiveClass)" href="/Dashboard/Index/">
+                <span class="material-symbols-outlined text-[22px]">dashboard</span>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+
+            <a class="@baseClass @(currentUrl.Contains("/About/") ? activeClass : inactiveClass)" href="/About/AboutList/">
+                <span class="material-symbols-outlined text-[22px]">person</span>
+                <span class="text-sm font-medium">Hakkımda</span>
+            </a>
+
+            <a class="@baseClass @(currentUrl.Contains("/Skill/") ? activeClass : inactiveClass)" href="/Skill/SkillList/">
+                <span class="material-symbols-outlined text-[22px]">psychology</span>
+                <span class="text-sm font-medium">Yeteneklerim</span>
+            </a>
+
+            <a class="@baseClass @(currentUrl.Contains("/Experience/") ? activeClass : inactiveClass)" href="/Experience/ExperienceList/">
+                <span class="material-symbols-outlined text-[22px]">work</span>
+                <span class="text-sm font-medium">Deneyimlerim</span>
+            </a>
+
+            <a class="@baseClass @(currentUrl.Contains("/Portfolio/") ? activeClass : inactiveClass)" href="/Portfolio/PortfolioList/">
+                <span class="material-symbols-outlined text-[22px]">folder</span>
+                <span class="text-sm font-medium">Projelerim</span>
+            </a>
+
+            <a class="@baseClass @(currentUrl.Contains("/Education/") ? activeClass : inactiveClass)" href="/Education/EducationList/">
+                <span class="material-symbols-outlined text-[22px]">school</span>
+                <span class="text-sm font-medium">Eğitimlerim</span>
+            </a>
+
+            <a class="@baseClass @(currentUrl.Contains("/Certificate/") ? activeClass : inactiveClass)" href="/Service/ServiceList/">
+                <span class="material-symbols-outlined text-[22px]">verified</span>
+                <span class="text-sm font-medium">Hizmetlerim</span>
+            </a>          
+
+            <a class="@baseClass @(currentUrl.Contains("/Message/") ? activeClass : inactiveClass)" href="/Message/MessageList/">
+                <span class="material-symbols-outlined text-[22px]">mail</span>
+                <span class="text-sm font-medium">Mesajlarım</span>
+            </a>
+
+            <a class="@baseClass @inactiveClass mt-auto" href="/Default/Index/">
+                <span class="material-symbols-outlined text-[22px]">logout</span>
+                <span class="text-sm font-medium">Çıkış Yap</span>
+            </a>
+        </nav>
+    </aside>
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark overflow-hidden">
+        <!-- Top Navbar -->
+        <header class="h-16 flex items-center justify-between px-8 bg-white dark:bg-[#111618] border-b border-slate-200 dark:border-[#283539] z-10">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">terminal</span>
+                <h2 class="text-lg font-bold tracking-tight">Developer Admin Panel</h2>
+            </div>
+
+            <div class="flex items-center gap-6">
+
+                <a href="/Message/MessageList" class="relative group flex items-center justify-center w-10 h-10 rounded-xl hover:bg-slate-100 dark:hover:bg-[#1c2427] transition-all">
+                    <span class="material-symbols-outlined text-slate-600 dark:text-[#9db2b9] group-hover:text-primary transition-colors">
+                        mail
+                    </span>
+
+                    @* BaseController'dan gelen dinamik sayı kontrolü *@
+                    @if (ViewBag.UnreadMsgCount != null && ViewBag.UnreadMsgCount > 0)
+                    {
+                        <span class="absolute top-1 right-1 flex h-4 w-4">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-4 w-4 bg-primary text-[10px] font-bold text-black flex items-center justify-center">
+                                @ViewBag.UnreadMsgCount
+                            </span>
+                        </span>
+                    }
+                </a>
+
+                <div class="h-8 w-px bg-slate-200 dark:bg-[#283539]"></div>
+
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <p class="text-sm font-bold tracking-tight">Aslı Selin Akdeniz</p>
+                        <p class="text-[10px] text-primary font-medium uppercase tracking-widest">Administrator</p>
+                    </div>
+                    <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-sm">person_check</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Scrollable Dashboard Content -->
+        <div>
+            @RenderBody()
+        </div>
+
+
+        <!-- Float Action Button for Mobile / Quick Access -->
+        <div class="fixed bottom-8 right-8 lg:hidden">
+            <button class="w-14 h-14 bg-primary rounded-full shadow-lg flex items-center justify-center text-background-dark hover:scale-105 transition-transform">
+                <span class="material-symbols-outlined text-[30px]">add</span>
+            </button>
+        </div>
+    </main>
+</body>
+</html>

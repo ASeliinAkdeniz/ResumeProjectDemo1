@@ -1,0 +1,54 @@
+﻿@model ResumeProjectDemo1.Entities.Education
+@{
+    ViewData["Title"] = "CreateEducation";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="flex-1 overflow-y-auto p-8">
+    <div class="max-w-4xl mx-auto space-y-8">
+        <div class="flex items-center gap-4">
+            <a href="/Education/EducationList/" class="flex items-center justify-center w-10 h-10 rounded-lg border border-slate-200 dark:border-[#3b4d54] hover:bg-slate-50 transition-colors">
+                <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+            </a>
+            <div>
+                <h3 class="text-3xl font-black tracking-tight">Yeni Eğitim Kaydı</h3>
+                <p class="text-slate-500 dark:text-[#9db2b9] mt-1">Akademik geçmişinize yeni bir okul veya sertifika ekleyin.</p>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-[#111618] rounded-2xl border border-slate-200 dark:border-[#3b4d54] p-8 shadow-sm">
+            <form method="post" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-300">Okul Adı / Kurs Başlığı</label>
+                    <input type="text" asp-for="Title" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-[#3b4d54] bg-white dark:bg-[#1c2427] outline-none focus:ring-2 focus:ring-primary/50" placeholder="Örn: İstanbul Teknik Üniversitesi" required />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-300">Bölüm / Branş</label>
+                    <input type="text" asp-for="Departmant" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-[#3b4d54] bg-white dark:bg-[#1c2427] outline-none focus:ring-2 focus:ring-primary/50" placeholder="Örn: Bilgisayar Mühendisliği" required />
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-300">Başlangıç Yılı</label>
+                        <input type="number" asp-for="StartYear" min="1900" max="2099" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-[#3b4d54] bg-white dark:bg-[#1c2427] outline-none focus:ring-2 focus:ring-primary/50" placeholder="2018" required />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-slate-700 dark:text-slate-300">Bitiş Yılı (Opsiyonel)</label>
+                        <input type="number" asp-for="EndYear" min="1900" max="2099" class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-[#3b4d54] bg-white dark:bg-[#1c2427] outline-none focus:ring-2 focus:ring-primary/50" placeholder="Boş bırakılırsa 'Devam Ediyor' görünür" />
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 pt-6 border-t border-slate-100 dark:border-[#3b4d54]">
+                    <button type="submit" class="flex items-center gap-2 px-8 py-3 bg-primary text-background-dark rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">
+                        <span class="material-symbols-outlined text-[20px]">add_task</span>
+                        Eğitimi Kaydet
+                    </button>
+                    <a href="/Education/EducationList/" class="px-8 py-3 bg-slate-100 dark:bg-[#1c2427] text-slate-600 rounded-xl font-bold text-sm transition-colors">İptal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

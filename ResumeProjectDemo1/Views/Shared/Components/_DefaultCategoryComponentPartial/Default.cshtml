@@ -1,0 +1,11 @@
+﻿@model List<ResumeProjectDemo1.Entities.Category>
+<nav class="portfolio-filter isotope-filter">
+    <ul class="justify-content-center">
+        <li><a href="#" class="active" data-filter="*">Tüm Kategoriler</a></li>
+        @foreach (var item in Model)
+        {
+            @* data-filter kısmına nokta ile ID ekliyoruz: .cat-1, .cat-2 gibi *@
+            <li><a href="#" data-filter=".cat-@item.CategoryId">@item.CategoryName</a></li>
+        }
+    </ul>
+</nav>

@@ -1,0 +1,37 @@
+﻿@model ResumeProjectDemo1.Models.AboutEducationViewModel
+
+<section id="about">
+    <div class="container">
+        @foreach (var item in Model.Abouts)
+        {
+            <div class="section-title h2 text-center mb-8">
+                <h2 class="mb-0">Hakkımda</h2>
+                <span class="title-letter">A</span>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 d-none d-lg-block">
+                    <img class="img-fluid w-100 rounded" src="@item.ImageUrl" alt="@item.NameSurnname">
+                </div>
+                <div class="col-lg-8">
+                    <h3>@item.NameSurnname</h3>
+                    <p class="lead">@item.Title</p>
+                    <p class="mb-5">@item.Description</p>
+
+                    <div class="row mb-8">
+                        <div class="col-md-6 mb-5 mb-md-0">
+                            <h4 class="mb-4">Eğitimlerim</h4>
+                            @foreach (var edu in Model.Educations)
+                            {
+                                <p class="h5">@edu.Title</p>
+                                <p>@edu.Departmant, @edu.StartYear - @edu.EndYear</p>
+                            }
+                        </div>
+                    </div>
+                    <a href="~/files/cv.docx" download="Asli_Selin_Akdeniz_CV.docx" class="btn btn-primary">
+                        CV İndir 
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</section>
